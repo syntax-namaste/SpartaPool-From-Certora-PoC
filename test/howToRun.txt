@@ -1,0 +1,1 @@
+npx hardhat test --trace --grep test02
