@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
-import "hardhat/console.sol";
 
 interface IERC20 {
     function init(string memory, string memory, uint256) external;

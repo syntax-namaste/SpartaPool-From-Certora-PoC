@@ -9,3 +9,6 @@ typechain-types
 cache
 artifacts
 
+#Certora files
+specs/.certora_internal
+

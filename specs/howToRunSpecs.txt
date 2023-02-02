@@ -1,0 +1,3 @@
+solc-select use 0.8.4
+certoraRun ../contracts/SpartaProtocolPool.sol:Pool ../contracts/ERC20.sol --verify Pool:Sparta.spec --solc solc
+

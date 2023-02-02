@@ -1,0 +1,13 @@
+{
+    "/home/certora_projects/HCProjects/spartaPoolExploration/specs": [
+        {
+            "anonymous_key": "3d2add04df6809693bf8847ccb3cfd2cd3e31f4e",
+            "domain": "https://prover.certora.com",
+            "job_id": "a4ac307b05cc4ffdab2eaf23bff70053",
+            "notify_msg": "testrun",
+            "output_url": "https://prover.certora.com/output/52228/a4ac307b05cc4ffdab2eaf23bff70053?anonymousKey=3d2add04df6809693bf8847ccb3cfd2cd3e31f4e",
+            "time": 1675320098,
+            "user_id": "52228"
+        }
+    ]
+}
