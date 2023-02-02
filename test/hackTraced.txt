@@ -1,0 +1,320 @@
+
+
+  [ Sparta Tests ]
+CREATE ERC20.constructor() => ([Token0])
+Duplicate definition of log (log(string), log(string,uint256), log(string,address,uint256), log(string,address,address,uint256))
+CALL Token0.init(name_="Token00", symbol_="TOKZER", total_=10000000000000000000000)
+CREATE ERC20.constructor() => ([Token1])
+Duplicate definition of log (log(string), log(string,uint256), log(string,address,uint256), log(string,address,address,uint256))
+CALL Token1.init(name_="Token01", symbol_="TOKONE", total_=10000000000000000000000)
+CREATE Pool.constructor(_token0=[Token0], _token1=[Token1]) => ([Pool])
+Duplicate definition of log (log(string), log(string,uint256), log(string,address,uint256), log(string,address,address,uint256))
+CALL Token0.transfer(recipient=[Pool], amount=100000000000000000000)
+CALL Token1.transfer(recipient=[Pool], amount=100000000000000000000)
+CALL Pool.init_pool()
+   STATICCALL Token0.balanceOf(account=[Pool]) => (100000000000000000000)
+   STATICCALL Token1.balanceOf(account=[Pool]) => (100000000000000000000)
+CALL Token0.transfer(recipient=[Attacker], amount=200000000000000000000)
+CALL Token1.transfer(recipient=[Attacker], amount=200000000000000000000)
+Duplicate definition of log (log(string), log(string,uint256), log(string,address,uint256), log(string,address,address,uint256))
+Duplicate definition of log (log(string), log(string,uint256), log(string,address,uint256), log(string,address,address,uint256))
+Duplicate definition of log (log(string), log(string,uint256), log(string,address,uint256), log(string,address,address,uint256))
+
+================= Test2 Start ==============================
+
+
+
+
+CALL Pool.logger__(info="******************************************************************************")
+   EVENT Pool.log(info="******************************************************************************")
+CALL Pool.logger__(info="1. Before add_liquidity()")
+   EVENT Pool.log(info="1. Before add_liquidity()")
+
+
+CALL Pool.totalSupply__()
+   EVENT Pool.log(info="totalSupply", val=100000)
+
+
+CALL Pool.logger__(info="attacker's LP token's balance")
+   EVENT Pool.log(info="attacker's LP token's balance")
+CALL Pool.balanceOf__(account=[Attacker])
+   EVENT Pool.log(info="balance of account", addr=[Attacker], val=0)
+
+
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Pool])
+   STATICCALL Token0.balanceOf(account=[Pool]) => (100000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Pool], val=100000000000000000000)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Pool])
+   STATICCALL Token1.balanceOf(account=[Pool]) => (100000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Pool], val=100000000000000000000)
+
+
+CALL Pool.recordedTokenBalance__(token_=[Token0])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token0], val=100000000000000000000)
+CALL Pool.recordedTokenBalance__(token_=[Token1])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token1], val=100000000000000000000)
+
+
+CALL Pool.logger__(info="attacker's cash (both tokens)")
+   EVENT Pool.log(info="attacker's cash (both tokens)")
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Attacker])
+   STATICCALL Token0.balanceOf(account=[Attacker]) => (200000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Attacker], val=200000000000000000000)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Attacker])
+   STATICCALL Token1.balanceOf(account=[Attacker]) => (200000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Attacker], val=200000000000000000000)
+CALL Pool.logger__(info="******************************************************************************")
+   EVENT Pool.log(info="******************************************************************************")
+
+
+
+CALL Pool.logger__(info="##############################################################################")
+   EVENT Pool.log(info="##############################################################################")
+CALL Pool.logger__(info="2. Now add_liquidity()")
+   EVENT Pool.log(info="2. Now add_liquidity()")
+CALL Token0.transfer(recipient=[Pool], amount=100000000000000000000)
+CALL Token1.transfer(recipient=[Pool], amount=100000000000000000000)
+CALL Pool.add_liquidity()
+   STATICCALL Token0.balanceOf(account=[Pool]) => (200000000000000000000)
+   STATICCALL Token1.balanceOf(account=[Pool]) => (200000000000000000000)
+   STATICCALL Token0.balanceOf(account=[Pool]) => (200000000000000000000)
+   STATICCALL Token1.balanceOf(account=[Pool]) => (200000000000000000000)
+   STATICCALL Token0.balanceOf(account=[Pool]) => (200000000000000000000)
+   STATICCALL Token1.balanceOf(account=[Pool]) => (200000000000000000000)
+
+
+CALL Pool.totalSupply__()
+   EVENT Pool.log(info="totalSupply", val=200000)
+
+
+CALL Pool.logger__(info="attacker's LP token's balance")
+   EVENT Pool.log(info="attacker's LP token's balance")
+CALL Pool.balanceOf__(account=[Attacker])
+   EVENT Pool.log(info="balance of account", addr=[Attacker], val=100000)
+
+
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Pool])
+   STATICCALL Token0.balanceOf(account=[Pool]) => (200000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Pool], val=200000000000000000000)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Pool])
+   STATICCALL Token1.balanceOf(account=[Pool]) => (200000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Pool], val=200000000000000000000)
+
+
+CALL Pool.recordedTokenBalance__(token_=[Token0])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token0], val=200000000000000000000)
+CALL Pool.recordedTokenBalance__(token_=[Token1])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token1], val=200000000000000000000)
+
+
+CALL Pool.logger__(info="attacker's cash (both tokens)")
+   EVENT Pool.log(info="attacker's cash (both tokens)")
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Attacker])
+   STATICCALL Token0.balanceOf(account=[Attacker]) => (100000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Attacker], val=100000000000000000000)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Attacker])
+   STATICCALL Token1.balanceOf(account=[Attacker]) => (100000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Attacker], val=100000000000000000000)
+CALL Pool.logger__(info="##############################################################################")
+   EVENT Pool.log(info="##############################################################################")
+
+
+
+CALL Pool.logger__(info="******************************************************************************")
+   EVENT Pool.log(info="******************************************************************************")
+CALL Pool.logger__(info="3. Transfer B to pool")
+   EVENT Pool.log(info="3. Transfer B to pool")
+CALL Token0.transfer(recipient=[Pool], amount=100000000000000000000)
+CALL Token1.transfer(recipient=[Pool], amount=100000000000000000000)
+
+
+CALL Pool.totalSupply__()
+   EVENT Pool.log(info="totalSupply", val=200000)
+
+
+CALL Pool.logger__(info="attacker's LP token's balance")
+   EVENT Pool.log(info="attacker's LP token's balance")
+CALL Pool.balanceOf__(account=[Attacker])
+   EVENT Pool.log(info="balance of account", addr=[Attacker], val=100000)
+
+
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Pool])
+   STATICCALL Token0.balanceOf(account=[Pool]) => (300000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Pool], val=300000000000000000000)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Pool])
+   STATICCALL Token1.balanceOf(account=[Pool]) => (300000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Pool], val=300000000000000000000)
+
+
+CALL Pool.recordedTokenBalance__(token_=[Token0])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token0], val=200000000000000000000)
+CALL Pool.recordedTokenBalance__(token_=[Token1])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token1], val=200000000000000000000)
+
+
+CALL Pool.logger__(info="attacker's cash (both tokens)")
+   EVENT Pool.log(info="attacker's cash (both tokens)")
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Attacker])
+   STATICCALL Token0.balanceOf(account=[Attacker]) => (0)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Attacker], val=0)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Attacker])
+   STATICCALL Token1.balanceOf(account=[Attacker]) => (0)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Attacker], val=0)
+CALL Pool.logger__(info="******************************************************************************")
+   EVENT Pool.log(info="******************************************************************************")
+
+
+
+CALL Pool.logger__(info="##############################################################################")
+   EVENT Pool.log(info="##############################################################################")
+CALL Pool.logger__(info="4. remove_liquidity()")
+   EVENT Pool.log(info="4. remove_liquidity()")
+CALL Pool.remove_liquidity(LP_tokens=100000)
+   STATICCALL Token0.balanceOf(account=[Pool]) => (300000000000000000000)
+   STATICCALL Token1.balanceOf(account=[Pool]) => (300000000000000000000)
+   CALL Token0.transfer(recipient=[Attacker], amount=150000000000000000000) => (true)
+   CALL Token1.transfer(recipient=[Attacker], amount=150000000000000000000) => (true)
+
+
+CALL Pool.totalSupply__()
+   EVENT Pool.log(info="totalSupply", val=100000)
+
+
+CALL Pool.logger__(info="attacker's LP token's balance")
+   EVENT Pool.log(info="attacker's LP token's balance")
+CALL Pool.balanceOf__(account=[Attacker])
+   EVENT Pool.log(info="balance of account", addr=[Attacker], val=0)
+
+
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Pool])
+   STATICCALL Token0.balanceOf(account=[Pool]) => (150000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Pool], val=150000000000000000000)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Pool])
+   STATICCALL Token1.balanceOf(account=[Pool]) => (150000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Pool], val=150000000000000000000)
+
+
+CALL Pool.recordedTokenBalance__(token_=[Token0])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token0], val=50000000000000000000)
+CALL Pool.recordedTokenBalance__(token_=[Token1])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token1], val=50000000000000000000)
+
+
+CALL Pool.logger__(info="attacker's cash (both tokens)")
+   EVENT Pool.log(info="attacker's cash (both tokens)")
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Attacker])
+   STATICCALL Token0.balanceOf(account=[Attacker]) => (150000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Attacker], val=150000000000000000000)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Attacker])
+   STATICCALL Token1.balanceOf(account=[Attacker]) => (150000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Attacker], val=150000000000000000000)
+CALL Pool.logger__(info="##############################################################################")
+   EVENT Pool.log(info="##############################################################################")
+
+
+
+CALL Pool.logger__(info="******************************************************************************")
+   EVENT Pool.log(info="******************************************************************************")
+CALL Pool.logger__(info="5. add_liquidity w/o transfer()")
+   EVENT Pool.log(info="5. add_liquidity w/o transfer()")
+CALL Pool.add_liquidity()
+   STATICCALL Token0.balanceOf(account=[Pool]) => (150000000000000000000)
+   STATICCALL Token1.balanceOf(account=[Pool]) => (150000000000000000000)
+   STATICCALL Token0.balanceOf(account=[Pool]) => (150000000000000000000)
+   STATICCALL Token1.balanceOf(account=[Pool]) => (150000000000000000000)
+   STATICCALL Token0.balanceOf(account=[Pool]) => (150000000000000000000)
+   STATICCALL Token1.balanceOf(account=[Pool]) => (150000000000000000000)
+
+
+CALL Pool.totalSupply__()
+   EVENT Pool.log(info="totalSupply", val=300000)
+
+
+CALL Pool.logger__(info="attacker's LP token's balance")
+   EVENT Pool.log(info="attacker's LP token's balance")
+CALL Pool.balanceOf__(account=[Attacker])
+   EVENT Pool.log(info="balance of account", addr=[Attacker], val=200000)
+
+
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Pool])
+   STATICCALL Token0.balanceOf(account=[Pool]) => (150000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Pool], val=150000000000000000000)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Pool])
+   STATICCALL Token1.balanceOf(account=[Pool]) => (150000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Pool], val=150000000000000000000)
+
+
+CALL Pool.recordedTokenBalance__(token_=[Token0])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token0], val=150000000000000000000)
+CALL Pool.recordedTokenBalance__(token_=[Token1])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token1], val=150000000000000000000)
+
+
+CALL Pool.logger__(info="attacker's cash (both tokens)")
+   EVENT Pool.log(info="attacker's cash (both tokens)")
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Attacker])
+   STATICCALL Token0.balanceOf(account=[Attacker]) => (150000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Attacker], val=150000000000000000000)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Attacker])
+   STATICCALL Token1.balanceOf(account=[Attacker]) => (150000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Attacker], val=150000000000000000000)
+CALL Pool.logger__(info="******************************************************************************")
+   EVENT Pool.log(info="******************************************************************************")
+
+
+
+CALL Pool.logger__(info="##############################################################################")
+   EVENT Pool.log(info="##############################################################################")
+CALL Pool.logger__(info="5. again remove_liquidity, but 2x tokens")
+   EVENT Pool.log(info="5. again remove_liquidity, but 2x tokens")
+CALL Pool.logger__(info="4. remove_liquidity()")
+   EVENT Pool.log(info="4. remove_liquidity()")
+CALL Pool.remove_liquidity(LP_tokens=200000)
+   STATICCALL Token0.balanceOf(account=[Pool]) => (150000000000000000000)
+   STATICCALL Token1.balanceOf(account=[Pool]) => (150000000000000000000)
+   CALL Token0.transfer(recipient=[Attacker], amount=100000000000000000000) => (true)
+   CALL Token1.transfer(recipient=[Attacker], amount=100000000000000000000) => (true)
+
+
+CALL Pool.totalSupply__()
+   EVENT Pool.log(info="totalSupply", val=100000)
+
+
+CALL Pool.logger__(info="attacker's LP token's balance")
+   EVENT Pool.log(info="attacker's LP token's balance")
+CALL Pool.balanceOf__(account=[Attacker])
+   EVENT Pool.log(info="balance of account", addr=[Attacker], val=0)
+
+
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Pool])
+   STATICCALL Token0.balanceOf(account=[Pool]) => (50000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Pool], val=50000000000000000000)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Pool])
+   STATICCALL Token1.balanceOf(account=[Pool]) => (50000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Pool], val=50000000000000000000)
+
+
+CALL Pool.recordedTokenBalance__(token_=[Token0])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token0], val=50000000000000000000)
+CALL Pool.recordedTokenBalance__(token_=[Token1])
+   EVENT Pool.log(info="recorded token balance in pool", addr=[Token1], val=50000000000000000000)
+
+
+CALL Pool.logger__(info="attacker's cash (both tokens)")
+   EVENT Pool.log(info="attacker's cash (both tokens)")
+CALL Pool.getTokenBalance__(token_=[Token0], user=[Attacker])
+   STATICCALL Token0.balanceOf(account=[Attacker]) => (250000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token0], addr2=[Attacker], val=250000000000000000000)
+CALL Pool.getTokenBalance__(token_=[Token1], user=[Attacker])
+   STATICCALL Token1.balanceOf(account=[Attacker]) => (250000000000000000000)
+   EVENT Pool.log(info="actual token balance", addr1=[Token1], addr2=[Attacker], val=250000000000000000000)
+CALL Pool.logger__(info="##############################################################################")
+   EVENT Pool.log(info="##############################################################################")
+
+=================  Test2 End  ==============================
+
+    √ can be hacked -- test02 (3271ms)
+
+
+  1 passing (4s)
+
